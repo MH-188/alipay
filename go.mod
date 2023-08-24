@@ -1,4 +1,4 @@
-module alipay
+module github.com/MH-188/alipay
 
 go 1.17
 
