@@ -2,7 +2,8 @@ package alipay
 
 // 错误码
 const (
-	RESPONSE_SUCCESS string = "10000"
+	RESPONSE_SUCCESS    string = "10000"
+	RESPONSE_NEED_QUERY string = "10003" // 该笔交易需要输入密码或验证时返回10003
 )
 
 const (

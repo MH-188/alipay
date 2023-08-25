@@ -35,7 +35,7 @@ func (rb RBuffer) IsBadResponse() bool {
 	str := bytes2string(rb) //可以更换成共享内存
 	index := strings.Index(str, "code")
 	code := str[index+7 : index+12]
-	if code != RESPONSE_SUCCESS {
+	if !(code == RESPONSE_SUCCESS || code == RESPONSE_NEED_QUERY) {
 		return true
 	}
 	return false
