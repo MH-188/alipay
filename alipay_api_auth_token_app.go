@@ -55,6 +55,7 @@ func (o *OpenAuthTokenAppRequest) DoValidate() error {
 
 // 换取应用授权令牌 响应
 type OpenAuthTokenAppResponse struct {
+	ErrorParam
 	UserId          string `json:"user_id"`           //必选	16 授权商户的user_id 2088102150527498
 	AuthAppId       string `json:"auth_app_id"`       //必选	20 授权商户的appid 2013121100055554
 	AppAuthToken    string `json:"app_auth_token"`    //必选	40 应用授权令牌 201509BBeff9351ad1874306903e96b91d248A36

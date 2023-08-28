@@ -15,4 +15,5 @@ type IRespVerify interface {
 
 type IResponse interface {
 	ApiParamMethod() string
+	IsBadResponse() error
 }

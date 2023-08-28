@@ -3,8 +3,6 @@ package alipay
 import (
 	"crypto"
 	"crypto/rsa"
-	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -129,24 +127,29 @@ func (client *AliClient) doRequest(apiReq IRequester, param []byte) (IResponse, 
 	}
 
 	// 处理业务层错误
-	if respBuff.IsBadResponse() {
-		type tempResponse struct {
-			AlipayTradePayResponse ErrorParam `json:"alipay_trade_pay_response"`
-		}
-		var errResp tempResponse
-		err = json.Unmarshal(resp, &errResp)
-		if err != nil {
-			return nil, err
-		}
-		err = errors.New(errResp.AlipayTradePayResponse.GetBadResponseDesc())
-		return nil, err
-	}
+	//if respBuff.IsBadResponse() {
+	//	type tempResponse struct {
+	//		AlipayTradePayResponse ErrorParam `json:"alipay_trade_pay_response"`
+	//	}
+	//	var errResp tempResponse
+	//	err = json.Unmarshal(resp, &errResp)
+	//	if err != nil {
+	//		return nil, err
+	//	}
+	//	err = errors.New(errResp.AlipayTradePayResponse.GetBadResponseDesc())
+	//	return nil, err
+	//}
 
 	apiResp, err := apiReq.GenResponse(resp)
 	if err != nil {
 		return nil, err
 	}
 	fmt.Println(apiResp)
+
+	err = apiResp.IsBadResponse()
+	if err != nil {
+		return nil, err
+	}
 
 	return apiResp, nil
 }

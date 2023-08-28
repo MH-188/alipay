@@ -27,6 +27,15 @@ func (e ErrorParam) GetBadResponseDesc() string {
 	return e.SubMsg
 }
 
+// IsBadResponse 响应code校验
+func (e ErrorParam) IsBadResponse() error {
+	if !(e.Code == RESPONSE_SUCCESS || e.Code == RESPONSE_NEED_QUERY) {
+		err := errors.New(e.SubMsg)
+		return err
+	}
+	return nil
+}
+
 type RBuffer []byte
 
 // IsBadResponse 响应code校验

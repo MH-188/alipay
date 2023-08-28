@@ -49,6 +49,7 @@ func (t *TradeCancelRequest) DoValidate() error {
 
 // 统一收单交易撤销接口 响应 参数
 type TradeCancelResponse struct {
+	ErrorParam
 	TradeNo    string `json:"trade_no"`     //必选	64 支付宝交易号; 当发生交易关闭或交易退款时返回； 2013112011001004330000121536
 	OutTradeNo string `json:"out_trade_no"` //必选	64 商户订单号 6823789339978248
 	RetryFlag  string `json:"retry_flag"`   //必选	1 是否需要重试 N
