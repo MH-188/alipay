@@ -57,7 +57,7 @@ type TradeRefundRequest struct {
 	RefundRoyaltyParameters []OpenApiRoyaltyDetailInfoPojo `json:"refund_royalty_parameters,omitempty"` //可选 退分账明细信息。
 	//注： 1.当面付且非直付通模式无需传入退分账明细，系统自动按退款金额与订单金额的比率，从收款方和分账收入方退款，不支持指定退款金额与退款方。
 	//2.直付通模式，电脑网站支付，手机 APP 支付，手机网站支付产品，须在退款请求中明确是否退分账，从哪个分账收入方退，退多少分账金额；如不明确，默认从收款方退款，收款方余额不足退款失败。不支持系统按比率退款。
-	Query_options []string //可选	1024 查询选项。 商户通过上送该参数来定制同步需要额外返回的信息字段，数组格式。支持：refund_detail_item_list：退款使用的资金渠道；deposit_back_info：触发银行卡冲退信息通知；
+	QueryOptions []string `json:"query_options,omitempty"` //可选	1024 查询选项。 商户通过上送该参数来定制同步需要额外返回的信息字段，数组格式。支持：refund_detail_item_list：退款使用的资金渠道；deposit_back_info：触发银行卡冲退信息通知；
 	//枚举值
 	//本次退款使用的资金渠道: refund_detail_item_list
 	//银行卡冲退信息: deposit_back_info
