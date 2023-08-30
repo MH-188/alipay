@@ -155,17 +155,17 @@ func (client *AliClient) doRequest(apiReq IRequester, param []byte) (IResponse, 
 }
 
 // AsyncRequestCheckSign 异步通知请求验签
-func (client *AliClient) AsyncRequestCheckSign(reqBuff []byte) error {
-	signData, sign, err := RBuffer(reqBuff).GetAsyncRequestSignStr()
+func (client *AliClient) AsyncRequestGetParamAndCheckSign(reqBuff []byte) (map[string]string, error) {
+	reqParam, signData, sign, err := RBuffer(reqBuff).GetAsyncRequestSignStr()
 	if err != nil {
-		return err
+		return reqParam, err
 	}
 
 	err = RSAVerifyWithKey([]byte(signData), []byte(sign), client.publicKey, crypto.SHA256)
 	if err != nil {
-		return err
+		return reqParam, err
 	}
-	return nil
+	return reqParam, nil
 }
 
 // AliPayOpenAuthTokenApp 换取应用授权令牌

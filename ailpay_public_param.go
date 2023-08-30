@@ -92,7 +92,7 @@ func (rb RBuffer) GetSyncRespSign() (string, error) {
 }
 
 // GetAsyncRequestSignStr 获取异步通知的待验证参数字符串 和 签名
-func (rb RBuffer) GetAsyncRequestSignStr() (string, string, error) {
+func (rb RBuffer) GetAsyncRequestSignStr() (map[string]string, string, string, error) {
 	asyncRequest := make(map[string]string)
 	requestStr := string(rb)
 	paramStrs := strings.Split(requestStr, "&")
@@ -100,12 +100,12 @@ func (rb RBuffer) GetAsyncRequestSignStr() (string, string, error) {
 		kvStrs := strings.Split(paramStrs[i], "=")
 		if len(kvStrs) != 2 {
 			err := errors.New("参数异常，无法解析：" + requestStr)
-			return "", "", err
+			return asyncRequest, "", "", err
 		}
 
 		valDecode, err := url.QueryUnescape(kvStrs[1])
 		if err != nil {
-			return "", "", err
+			return asyncRequest, "", "", err
 		}
 
 		asyncRequest[kvStrs[0]] = valDecode
@@ -130,9 +130,9 @@ func (rb RBuffer) GetAsyncRequestSignStr() (string, string, error) {
 	sign, ok := asyncRequest["sign"]
 	if !ok {
 		err := errors.New("sign类型异常，请检查响应参数")
-		return "", "", err
+		return asyncRequest, "", "", err
 	}
-	return strings.Join(feildStrs, "&"), sign, nil
+	return asyncRequest, strings.Join(feildStrs, "&"), sign, nil
 }
 
 /*
