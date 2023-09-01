@@ -102,7 +102,7 @@ func (client *AliClient) doRequest(apiReq IRequester, param []byte) (IResponse, 
 
 	// 发起请求
 	method := apiReq.HttpMethod()
-	resp, err := HttpDoRequest(method, client.aliGateway, param)
+	resp, err := HttpDoRequest(client.httpClient, method, client.aliGateway, param)
 	if err != nil {
 		return nil, err
 	}
